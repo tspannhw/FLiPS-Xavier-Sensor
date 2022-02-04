@@ -5,6 +5,13 @@ MQTT, Apache Pulsar, Apache Flink, Apache Spark, Pulsar SQL
 ### Run
 
 ````
+#!/bin/bash
+
+
+DATE=$(date +"%Y-%m-%d_%H%M")
+python3 -W ignore /home/nvidia/nvme/minifi-jetson-xavier/demo.py --camera /dev/video0 --network googlenet /home/nvidia/nvme/images/$DATE.jpg  2>/dev/null
+java -jar /home/nvidia/nvme/minifi-jetson-xavier/IoTProducer.jar --serviceUrl pulsar://pulsar1:6650 --topic 'persistent://public/default/iotjetsonjson' --message "`tail -1 /home/nvidia/nvme/logs/demo1.log`"
+
 
 Using Spark's default log4j profile: org/apache/spark/log4j-defaults.properties
 Setting default log level to "WARN".
